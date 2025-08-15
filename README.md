@@ -120,4 +120,4 @@ The following tilings are generated automatically. The left tiling is produced b
 
 ![escher_three](public/esch3.png)
 
-Note that in the right hand side, the repeating motif is a single shape that is repeated across the plane with only rigid motions, with some fixed background shapes.
+Note that in the right hand side, the repeating motif is a single shape that is repeated across the plane with only rigid motions, with some fixed background shapes. Finally, the Gallery showcases example runs using polygons from the EscherTiling repository. Thus, this project serves two purposes: (1) generating escherizations and tilings for random images, and (2) hosting an online gallery of the polygons from the EscherTiling project.
