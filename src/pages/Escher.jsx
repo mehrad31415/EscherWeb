@@ -423,277 +423,281 @@ function Escher() {
         </div>
       )}
       {source && (
-        <section className="esch-grid">
-          <article className="esch-panel">
-            <h2 className="esch-h2">Original</h2>
-            <div className="esch-media">
-              <img
-                src={source?.url || ""}
-                alt={caption}
-                crossOrigin={source?.kind === "image" ? "anonymous" : undefined}
-              />
-              {source?.url && (
-                <div className="esch-download">
-                  <a href={source.url} download={`${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.png`} className="download-btn">
-                    ⬇ Download
-                  </a>
-                </div>
-              )}
-            </div>
-            <div className="esch-meta">
-              <div className="esch-caption">{caption}</div>
-              {source?.author ? <div className="esch-credit">{source.author}</div> : null}
-              {source?.kind === "upload" && (
-                <small className="esch-note">Uploaded locally.</small>
-              )}
-            </div>
-          </article>
-          <article
-            className="esch-panel"
-            style={{
-              position: "relative",
-              display: "flex",
-              flexDirection: "column"
-            }}
-          >
-            <h2 className="esch-h2">Contour</h2>
-
-            <div className="esch-media" style={{ flex: "1 1 auto" }}>
-              <canvas ref={contourCanvasRef} className="esch-canvas" />
-            </div>
-
-            <div
-              className="esch-meta"
+        <div>
+          <section className="esch-grid">
+            <article className="esch-panel">
+              <h2 className="esch-h2">Original</h2>
+              <div className="esch-media">
+                <img
+                  src={source?.url || ""}
+                  alt={caption}
+                  crossOrigin={source?.kind === "image" ? "anonymous" : undefined}
+                />
+                {source?.url && (
+                  <div className="esch-download">
+                    <a href={source.url} download={`${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.png`} className="download-btn">
+                      ⬇ Download
+                    </a>
+                  </div>
+                )}
+              </div>
+              <div className="esch-meta">
+                <div className="esch-caption">{caption}</div>
+                {source?.author ? <div className="esch-credit">{source.author}</div> : null}
+                {source?.kind === "upload" && (
+                  <small className="esch-note">Uploaded locally.</small>
+                )}
+              </div>
+            </article>
+            <article
+              className="esch-panel"
               style={{
-                display: "grid",
-                gap: 8,
                 position: "relative",
-                paddingBottom: "60px"
+                display: "flex",
+                flexDirection: "column"
               }}
             >
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "60px",
-                  left: 0,
-                  right: 0,
-                  display: "flex",
-                  gap: 12,
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <label style={{ display: "flex", alignItems: "center" }}>
-                  Points
-                  <input
-                    type="range"
-                    min={10}
-                    max={200}
-                    step={5}
-                    value={targetPts}
-                    onChange={(e) => setTargetPts(+e.target.value)}
-                    style={{ marginInline: 8 }}
-                  />
-                  <input
-                    type="number"
-                    min={10}
-                    max={200}
-                    step={5}
-                    value={targetPts}
-                    onChange={(e) => setTargetPts(+e.target.value || 100)}
-                    style={{ width: 80 }}
-                  />
-                </label>
-                {error && (
-                  <small className="esch-note" style={{ color: "crimson" }}>
-                    {error}
-                  </small>
-                )}
-                {!error && outline.length > 0 && (
-                  <small className="esch-note">{outline.length} pts</small>
-                )}
-              </div>
-              <div
-                className="esch-download"
-                style={{
-                  position: "absolute",
-                  bottom: "120px",
-                  left: 0,
-                  right: 0,
-                  display: "flex",
-                  gap: 12,
-                  flexWrap: "wrap",
-                  justifyContent: "center"
-                }}
-              >
-                <button
-                  className="download-btn"
-                  onClick={removeBg}
-                  disabled={!srcUrl || contourBusy || !cvReady}
-                >
-                  {contourBusy
-                    ? "Processing…"
-                    : cvReady
-                      ? "Get Contour"
-                      : "Loading OpenCV…"}
-                </button>
-                <a
-                  href={
-                    outline.length
-                      ? contourCanvasRef.current?.toDataURL("image/png")
-                      : undefined
-                  }
-                  download={
-                    outline.length
-                      ? `contour_${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.png`
-                      : undefined
-                  }
-                  className="download-btn"
-                  onClick={(e) => {
-                    if (!outline.length) {
-                      e.preventDefault();
-                      setError("Please generate a contour first.");
-                    }
-                  }}
-                >
-                  ⬇ Image
-                </a>
-                <a
-                  href={
-                    outline.length
-                      ? URL.createObjectURL(
-                        new Blob(
-                          [
-                            `${outline.length}\n` +
-                            outline.map((p) => `${p[0]} ${p[1]}`).join("\n"),
-                          ],
-                          { type: "text/plain" }
-                        )
-                      )
-                      : undefined
-                  }
-                  download={
-                    outline.length
-                      ? `contour_${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.dat`
-                      : undefined
-                  }
-                  className="download-btn"
-                  onClick={(e) => {
-                    if (!outline.length) {
-                      e.preventDefault();
-                      setError("Please generate a contour first.");
-                    }
-                  }}
-                >
-                  ⬇ Input.dat
-                </a>
-              </div>
-            </div>
-          </article>
-          <article className="esch-panel" style={{
-            display: "flex", flexDirection: "column", position: "relative"
-          }}>
-            <h2 className="esch-h2">Escherized</h2>
-            <div className="esch-media" style={{ flex: "1 1 auto" }}>
-              <canvas ref={escherizedCanvasRef} className="esch-canvas" />
-            </div>
-            <div className="esch-meta" style={{
-              marginTop: "auto",
-              marginBottom: "2000 px",
-              display: "grid",
-              gap: 8
-            }}>
-              <div
-                className="esch-download"
-                style={{
-                  position: "absolute",
-                  bottom: "120px",
-                  left: 0,
-                  right: 0,
-                  display: "flex",
-                  gap: "12px",
-                  flexWrap: "wrap",
-                  justifyContent: "center"
-                }}
-              >
-                <button
-                  className="download-btn"
-                  onClick={runJikken}
-                  disabled={jikkenBusy}
-                >
-                  {jikkenBusy ? "Running…" : "Escherize"}
-                </button>
-                <a
-                  href={hasEscherized ? escherizedCanvasRef.current?.toDataURL("image/png") : undefined}
-                  download={hasEscherized ? `escherized_${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.png` : undefined}
-                  className={`download-btn ${!hasEscherized ? "disabled" : ""}`}
-                  onClick={(e) => {
-                    if (!hasEscherized) {
-                      e.preventDefault();
-                      setEscherizedError("Please run Escherize before downloading.");
-                    }
-                  }}
-                > ⬇ Download </a>
-              </div>
-              {escherizedError && (
-                <small
-                  className="esch-note"
-                  style={{
-                    color: "crimson",
-                    textAlign: "center",
-                    position: "absolute",
-                    bottom: "50px",
-                    left: 0,
-                    right: 0
-                  }}
-                > {escherizedError}
-                </small>
-              )}
-            </div>
-          </article>
-          <article className="esch-panel">
-            <h2 className="esch-h2">Tiling by EscherTiling</h2>
-            <div className="esch-media">
-              {tilingUrl ? (
-                <>
-                  <img src={tilingUrl} alt="Generated tiling" style={{ maxWidth: "100%" }} />
-                  <div className="esch-download" style={{ marginTop: 8 }}>
-                    <a href={tilingUrl} download={`tiling_escher_${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.png`} className="download-btn">
-                      ⬇ Download </a>
-                  </div>
-                </>
-              ) : (
-                <small className="esch-note">No tiling generated yet.</small>
-              )}
-            </div>
-          </article>
-          <article className="esch-panel">
-            <h2 className="esch-h2">Tiling by tactile-js</h2>
-            <div className="esch-canvas-wrap">
-              <canvas ref={tileCanvasRef} className="esch-canvas" />
-            </div>
-            <div className="esch-meta" style={{ textAlign: "center", marginTop: 8 }}>
-              <small>Tiling rendered with IsohedralTiling</small>
+              <h2 className="esch-h2">Contour</h2>
 
-              {tactileReady ? (
-                <div className="esch-download" style={{ marginTop: 8 }}>
-                  <a
-                    href={tileCanvasRef.current?.toDataURL("image/png")}
-                    download={`tiling_tactile_${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.png`}
+              <div className="esch-media" style={{ flex: "1 1 auto" }}>
+                <canvas ref={contourCanvasRef} className="esch-canvas" />
+              </div>
+
+              <div
+                className="esch-meta"
+                style={{
+                  display: "grid",
+                  gap: 8,
+                  position: "relative",
+                  paddingBottom: "60px"
+                }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "60px",
+                    left: 0,
+                    right: 0,
+                    display: "flex",
+                    gap: 12,
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <label style={{ display: "flex", alignItems: "center" }}>
+                    Points
+                    <input
+                      type="range"
+                      min={10}
+                      max={200}
+                      step={5}
+                      value={targetPts}
+                      onChange={(e) => setTargetPts(+e.target.value)}
+                      style={{ marginInline: 8 }}
+                    />
+                    <input
+                      type="number"
+                      min={10}
+                      max={200}
+                      step={5}
+                      value={targetPts}
+                      onChange={(e) => setTargetPts(+e.target.value || 100)}
+                      style={{ width: 80 }}
+                    />
+                  </label>
+                  {error && (
+                    <small className="esch-note" style={{ color: "crimson" }}>
+                      {error}
+                    </small>
+                  )}
+                  {!error && outline.length > 0 && (
+                    <small className="esch-note">{outline.length} pts</small>
+                  )}
+                </div>
+                <div
+                  className="esch-download"
+                  style={{
+                    position: "absolute",
+                    bottom: "120px",
+                    left: 0,
+                    right: 0,
+                    display: "flex",
+                    gap: 12,
+                    flexWrap: "wrap",
+                    justifyContent: "center"
+                  }}
+                >
+                  <button
                     className="download-btn"
+                    onClick={removeBg}
+                    disabled={!srcUrl || contourBusy || !cvReady}
                   >
-                    ⬇ Download
+                    {contourBusy
+                      ? "Processing…"
+                      : cvReady
+                        ? "Get Contour"
+                        : "Loading OpenCV…"}
+                  </button>
+                  <a
+                    href={
+                      outline.length
+                        ? contourCanvasRef.current?.toDataURL("image/png")
+                        : undefined
+                    }
+                    download={
+                      outline.length
+                        ? `contour_${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.png`
+                        : undefined
+                    }
+                    className="download-btn"
+                    onClick={(e) => {
+                      if (!outline.length) {
+                        e.preventDefault();
+                        setError("Please generate a contour first.");
+                      }
+                    }}
+                  >
+                    ⬇ Image
+                  </a>
+                  <a
+                    href={
+                      outline.length
+                        ? URL.createObjectURL(
+                          new Blob(
+                            [
+                              `${outline.length}\n` +
+                              outline.map((p) => `${p[0]} ${p[1]}`).join("\n"),
+                            ],
+                            { type: "text/plain" }
+                          )
+                        )
+                        : undefined
+                    }
+                    download={
+                      outline.length
+                        ? `contour_${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.dat`
+                        : undefined
+                    }
+                    className="download-btn"
+                    onClick={(e) => {
+                      if (!outline.length) {
+                        e.preventDefault();
+                        setError("Please generate a contour first.");
+                      }
+                    }}
+                  >
+                    ⬇ Input.dat
                   </a>
                 </div>
-              ) : (
-                <small className="esch-note" style={{ display: "block", marginTop: 8 }}>
-                  No tiling generated yet.
-                </small>
-              )}
-            </div>
-          </article>
-        </section>
+              </div>
+            </article>
+            <article className="esch-panel" style={{
+              display: "flex", flexDirection: "column", position: "relative"
+            }}>
+              <h2 className="esch-h2">Escherized</h2>
+              <div className="esch-media" style={{ flex: "1 1 auto" }}>
+                <canvas ref={escherizedCanvasRef} className="esch-canvas" />
+              </div>
+              <div className="esch-meta" style={{
+                marginTop: "auto",
+                marginBottom: "2000 px",
+                display: "grid",
+                gap: 8
+              }}>
+                <div
+                  className="esch-download"
+                  style={{
+                    position: "absolute",
+                    bottom: "120px",
+                    left: 0,
+                    right: 0,
+                    display: "flex",
+                    gap: "12px",
+                    flexWrap: "wrap",
+                    justifyContent: "center"
+                  }}
+                >
+                  <button
+                    className="download-btn"
+                    onClick={runJikken}
+                    disabled={jikkenBusy}
+                  >
+                    {jikkenBusy ? "Running…" : "Escherize"}
+                  </button>
+                  <a
+                    href={hasEscherized ? escherizedCanvasRef.current?.toDataURL("image/png") : undefined}
+                    download={hasEscherized ? `escherized_${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.png` : undefined}
+                    className={`download-btn ${!hasEscherized ? "disabled" : ""}`}
+                    onClick={(e) => {
+                      if (!hasEscherized) {
+                        e.preventDefault();
+                        setEscherizedError("Please run Escherize before downloading.");
+                      }
+                    }}
+                  > ⬇ Download </a>
+                </div>
+                {escherizedError && (
+                  <small
+                    className="esch-note"
+                    style={{
+                      color: "crimson",
+                      textAlign: "center",
+                      position: "absolute",
+                      bottom: "50px",
+                      left: 0,
+                      right: 0
+                    }}
+                  > {escherizedError}
+                  </small>
+                )}
+              </div>
+            </article>
+          </section>
+          <section className="bottom-two">
+            <article className="esch-panel">
+              <h2 className="esch-h2">Tiling by EscherTiling</h2>
+              <div className="esch-media">
+                {tilingUrl ? (
+                  <>
+                    <img src={tilingUrl} alt="Generated tiling" style={{ maxWidth: "100%" }} />
+                    <div className="esch-download" style={{ marginTop: 8 }}>
+                      <a href={tilingUrl} download={`tiling_escher_${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.png`} className="download-btn">
+                        ⬇ Download </a>
+                    </div>
+                  </>
+                ) : (
+                  <small className="esch-note">No tiling generated yet.</small>
+                )}
+              </div>
+            </article>
+            <article className="esch-panel">
+              <h2 className="esch-h2">Tiling by tactile-js</h2>
+              <div className="esch-canvas-wrap">
+                <canvas ref={tileCanvasRef} className="esch-canvas" />
+              </div>
+              <div className="esch-meta" style={{ textAlign: "center", marginTop: 8 }}>
+                <small>Tiling rendered with IsohedralTiling</small>
+
+                {tactileReady ? (
+                  <div className="esch-download" style={{ marginTop: 8 }}>
+                    <a
+                      href={tileCanvasRef.current?.toDataURL("image/png")}
+                      download={`tiling_tactile_${caption?.replace(/\s+/g, "_") || "image"}_${Date.now()}.png`}
+                      className="download-btn"
+                    >
+                      ⬇ Download
+                    </a>
+                  </div>
+                ) : (
+                  <small className="esch-note" style={{ display: "block", marginTop: 8 }}>
+                    No tiling generated yet.
+                  </small>
+                )}
+              </div>
+            </article>
+          </section>
+        </div>
       )}
     </main>
   );
