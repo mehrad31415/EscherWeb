@@ -1,0 +1,3 @@
+# Escher Web
+
+This is the final project for the CS898 course at the University of Waterloo, on `Tiling and Computation`. It is a React-based application designed so that the user can draw, lookup, or upload a shape. The `Eschering` algorithm will return a tilable shape that is similar to the original one. The `tactile-js` library is used to give a tiling of the plane with the output shape returned by the algorithm.

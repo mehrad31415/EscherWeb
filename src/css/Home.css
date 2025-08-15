@@ -1,0 +1,13 @@
+:root {
+  --nav-height: 0px;
+}
+
+.wallpaper {
+  inline-size: 100%;
+  block-size: calc(100svh - var(--nav-height));
+  background-image: var(--bg-image);
+  background-repeat: repeat;
+  background-size: 300px auto;
+  background-position: top left;
+}
+

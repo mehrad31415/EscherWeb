@@ -1,0 +1,119 @@
+.draw-root {
+  --draw-fg: #111;
+  --draw-bg: #fff;
+  --draw-border: #ddd;
+  --draw-border-light: #ececec;
+  --draw-primary: #111;
+  --draw-grid-color: rgba(0, 0, 0, 0.06);
+
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: #f8f8fb;
+  color: var(--draw-fg);
+}
+
+.draw-toolbar {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem clamp(0.75rem, 3vw, 1.25rem);
+  border-bottom: 1px solid var(--draw-border-light);
+  background: #ffffffcc;
+  backdrop-filter: blur(6px);
+}
+
+.draw-group {
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 0.5rem;
+}
+
+.draw-btn {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--draw-border);
+  background: var(--draw-bg);
+  color: var(--draw-fg);
+  border-radius: 0.55rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.draw-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--draw-bg) 85%, var(--draw-fg));
+}
+
+.draw-btn.primary {
+  background: var(--draw-primary);
+  color: #fff;
+  border-color: var(--draw-primary);
+}
+
+.draw-btn.active {
+  outline: 2px solid var(--draw-primary);
+}
+
+.draw-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.draw-label {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.95rem;
+}
+
+.draw-label input[type="color"] {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.draw-label input[type="range"] {
+  width: 140px;
+}
+
+.draw-check {
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.draw-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.draw-stage.with-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--draw-grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--draw-grid-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.draw-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draw-toolbar {
+    transition: none;
+  }
+}

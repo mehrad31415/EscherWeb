@@ -1,0 +1,109 @@
+.escher-root {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: #fafafa;
+  color: #111;
+}
+
+.escher-header {
+  padding: 1rem clamp(1rem, 4vw, 2rem);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #ececec;
+  background: #fff;
+}
+
+.escher-title { margin: 0; font-size: clamp(1.25rem, 3vw, 1.6rem); font-weight: 700; }
+.escher-actions { margin-left: auto; display: inline-grid; grid-auto-flow: column; gap: 0.5rem; }
+.esch-btn {
+  padding: 0.5rem 0.8rem; border: 1px solid #ddd; border-radius: 0.6rem;
+  background: #111; color: #fff; text-decoration: none; cursor: pointer;
+}
+
+.esch-grid {
+  padding: 1rem clamp(1rem, 4vw, 2rem);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1100px) {
+  .esch-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.esch-panel {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0.6rem;
+  background: #fff; border: 1px solid #eee; border-radius: 0.8rem; overflow: hidden;
+}
+.esch-h2 { margin: 0; padding: 0.75rem 0.9rem; border-bottom: 1px solid #f0f0f0; font-size: 1rem; }
+
+.esch-media {
+  display: grid; place-items: center; padding: 0.5rem;
+}
+.esch-media img {
+  max-width: 100%; max-height: 520px; object-fit: contain; display: block; background: #fff;
+}
+.esch-media canvas {
+  max-width: 100%; max-height: 520px; object-fit: contain; display: block; background: #fff;
+}
+
+.esch-canvas-wrap { padding: 0.5rem; }
+.esch-canvas {
+  width: 100%; height: 520px; display: block; border-radius: 0.6rem; background: #f3f3f6;
+}
+
+.esch-meta { padding: 0.5rem 0.9rem 0.8rem; color: #555; display: grid; gap: 0.25rem; }
+.esch-caption { font-weight: 600; }
+.esch-credit { font-size: 0.9rem; color: #666; }
+
+
+.esch-download {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.download-btn {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: #4f46e5;
+  color: white;
+  border-radius: 0.4rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.download-btn:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+.download-btn:active {
+  background: #3730a3;
+  transform: translateY(0);
+}
+
+.esch-dropzone {
+  max-width: 700px;
+  max-height:500px;
+  margin: 0 auto;
+  border: 2px dashed #ccc;
+  border-radius: 0.5rem;
+  padding: 1.2rem;
+  text-align: center;
+  cursor: pointer;
+  color: #555;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.esch-dropzone:hover {
+  border-color: #4f46e5;
+  background-color: #f9f9ff;
+}
