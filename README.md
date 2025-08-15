@@ -104,7 +104,7 @@ This image was taken from Kaplan, C. S., & Salesin, D. H. (2000, July). Escheriz
 
 Under the `src/wallpapers/` directory there are seven different wallpapers where each time the _homepage_ is reloaded one is randomly chosen as the wallpaper. These images were taken from `https://tiled.art/en/home/`.
 
-- The navigation bar includes _Home_, _Search_, _Draw_, _Escher_, _Gallery_, and _About_. The _About_ page provides a biref overview about the project and acknowledgements. The _Search_ provides an interface to lookup an image of the users choice. In the backend, Unsplash, Pexels, and Pixabay APIs are used to retrieve images. This functionality is rate-limited, and frequent requests may result in temporary unavailability. One choosing the image, there is a button `Use in Escher` which leads to the _Escher_ home page. Likewise, in the _Draw_ page there is a canvas where the user can draw their own shape and upon clicking on `Use in Escher` they will be redirected to the `Escher` page. Alternatively, the user can directly go to the _Escher_ page from the navigation bar and upload their image of choice in `png/jpg` format.
+- The navigation bar includes _Home_, _Search_, _Draw_, _Escher_, _Gallery_, and _About_. The _About_ page provides a biref overview about the project and acknowledgements. The _Search_ provides an interface to lookup an image of the users choice. In the backend, Unsplash, Pexels, and Pixabay APIs are used to retrieve images. This functionality is rate-limited, and frequent requests may result in temporary unavailability. Once choosing the image, there is a button `Use in Escher` which leads to the _Escher_ page. Likewise, in the _Draw_ page there is a canvas where the user can draw their own shape and upon clicking on `Use in Escher` they will be redirected to the `Escher` page. Alternatively, the user can directly go to the _Escher_ page from the navigation bar and upload their image of choice in `png/jpg` format.
 
 ![search](public/search.png)
 
@@ -122,4 +122,6 @@ The following tilings are generated automatically. The left tiling is produced b
 
 Note that in the right hand side, the repeating motif is a single shape that is repeated across the plane with only rigid motions, with some fixed background shapes.
 
-- Finally, the Gallery showcases example runs using polygons from the EscherTiling repository. Thus, this project serves two purposes: (1) generating escherizations and tilings for random images, and (2) hosting an online gallery of the polygons from the EscherTiling project.
+- Finally, the Gallery showcases example runs using polygons from the EscherTiling repository. Thus, this project serves two purposes:
+    + generating escherizations and tilings for random images.
+    + hosting an online gallery of the polygons from the EscherTiling project.
