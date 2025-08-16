@@ -1,6 +1,6 @@
 # Escher Web
 
-Final project for **CS898 – Tiling and Computation**, University of Waterloo.
+Final project for **CS898 – Tiling and Computation**, University of Waterloo. The public link to the website can be found on [`EscherWeb`](https://escher-web.vercel.app/). 
 
 Escher Web is a **React-based interactive web tool** for transforming user-supplied shapes into *mathematically valid tileable forms*. Users can **draw**, **search**, or **upload** a shape, which is then processed by an **Escherization algorithm** to produce a similar but tilable shape. The result is displayed in a plane tiling generated via the [`tactile-js`](https://github.com/isohedral/tactile-js) library and the backend of the [`EscherTiling`](https://github.com/nagata-yuichi/EscherTiling) algorithm.
 
