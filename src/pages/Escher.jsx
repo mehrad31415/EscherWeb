@@ -16,7 +16,6 @@ function Escher() {
   const [tactileReady, setTactileReady] = useState(false);
 
   // Busy state
-  const [busy, setBusy] = useState(false);
   const [contourBusy, setContourBusy] = useState(false);
   const [jikkenBusy, setJikkenBusy] = useState(false);
 

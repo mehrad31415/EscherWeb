@@ -1,0 +1,44 @@
+.gallery {
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.gallery table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.gallery th,
+.gallery td {
+  background: #fafafa;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.gallery td img {
+  max-width: 120px;
+  background: #fafafa;
+  max-height: 120px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.gallery th {
+  background: #f0f0f0;
+  color: #333;
+  border-bottom: 2px solid #e74c3c;
+}
+
+.shape-name {
+  font-weight: bold;
+  background: #fafafa;
+  color: #e74c3c;
+}
+
+.missing {
+  color: #aaa;
+  font-style: italic;
+}
